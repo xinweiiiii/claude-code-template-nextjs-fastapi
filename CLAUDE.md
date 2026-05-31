@@ -21,6 +21,7 @@ Refer to the sample below
 See @package.json for all dependencies.
 See @docs/architecture.md for system design.
 See @docs/design-docs.md for system context.
+See @@AGENTS.md for all frontend system
 
 ## How to work on this project
 - Frontend dev: `npm run dev`

@@ -2,11 +2,11 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Write",
+        "matcher": "Write|Edit",
         "hooks": [
           {
             "type": "command",
-            "command": "cd $PROJECT_ROOT && npm run lint --fix"
+            "command": "FILE=$(python3 -c \"import sys,json; print(json.load(sys.stdin).get('tool_input',{}).get('file_path',''))\"); EXT=\"${FILE##*.}\"; cd \"${PROJECT_ROOT:-.}\"; case \"$EXT\" in ts|tsx|js|jsx) npx eslint --fix \"$FILE\" || true; npx prettier --write \"$FILE\" || true;; py) RUFF_CACHE_DIR=/tmp/ruff-cache ruff check --fix \"$FILE\" || true; RUFF_CACHE_DIR=/tmp/ruff-cache ruff format \"$FILE\" || true;; esac"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/hooks/block_dangerous.py"
+            "command": "python3 \"${PROJECT_ROOT:-.}/.claude/hooks/block_dangerous.py\""
           }
         ]
       }
@@ -27,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/hooks/session_summary.py"
+            "command": "python3 \"${PROJECT_ROOT:-.}/.claude/hooks/session_summary.py\""
           }
         ]
       }
