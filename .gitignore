@@ -1,0 +1,25 @@
+# Session logs — may contain sensitive prompt content
+.claude/session-logs/
+
+# Ruff cache
+.ruff_cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+dist/
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
