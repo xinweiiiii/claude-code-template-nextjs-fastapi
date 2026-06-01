@@ -8,6 +8,12 @@ Refer to the sample below
 ---
 
 # Project: [Name]
+## Project Overview
+Short explanation of what the project is.
+- What the product is
+- Who it is for
+- What the app is trying to optimize for
+- Most important business or UX constraints
 
 ## Stack
 - Frontend: Next.js 15, React 19, TypeScript 5.4
@@ -22,6 +28,11 @@ See @package.json for all dependencies.
 See @docs/architecture.md for system design.
 See @docs/design-docs.md for system context.
 See @@AGENTS.md for all frontend system
+
+Do not introduce: (Important)
+- Redux
+- styled-components
+- Material UI
 
 ## How to work on this project
 - Frontend dev: `npm run dev`
