@@ -80,3 +80,8 @@ Do not introduce: (Important)
 - Show proposed file changes before performing large refactors
 - Prefer multiple small commits over one large commit during development
 
+
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
