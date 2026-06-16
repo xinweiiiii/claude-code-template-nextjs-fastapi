@@ -110,6 +110,8 @@ For each changed file, evaluate:
 - Flag architectural violations aggressively.
 - Call out assumptions that are not validated.
 
+Do refer to the coding-patterns skills
+
 ## Output Format
 ### MUST FIX
 #### Issues that can cause:
