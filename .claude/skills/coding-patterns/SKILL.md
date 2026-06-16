@@ -3,7 +3,7 @@ name: clean-code-production-patterns
 displayName: Clean Code Production Patterns
 description: Enforce production-grade coding patterns that optimize maintainability, incident response, change safety, and long-term system evolution. Use when designing, reviewing, or refactoring application code.
 version: 1.0.0
---------------
+---
 
 # Clean Code Production Patterns
 
@@ -32,7 +32,7 @@ Use this skill when:
 - Reducing cognitive complexity
 - Evaluating AI-generated code
 - Breaking down large feature implementations
-0 Reviewing architecture for maintainability
+- Reviewing architecture for maintainability
 
 Activate especially when code contains:
 - Deeply nested conditionals
