@@ -66,7 +66,9 @@ Use the `code-reviewer` subagent on the changed files.
 
 **The subagent has no web access — it cannot open a URL.** Pass the resolved context down as text in its prompt: the problem statement, the acceptance criteria as an explicit list, the declared non-goals, and the ticket or spec identifier for attribution. A bare link in the prompt is useless to it.
 
-Ask it to follow its own review process (intent → tests first → implementation → verify the verification) and to evaluate correctness, edge cases, security, performance, architecture, refactoring quality, dependency changes, FastAPI/Next.js best practices, test coverage, and production readiness.
+Ask it to follow its own phased review process — Understand → Surface Sweep → Deep Review → Verdict — and to evaluate correctness, edge cases, security, performance, architecture, refactoring quality, dependency changes, FastAPI/Next.js best practices, test coverage, and production readiness.
+
+For a large or high-risk change, drive it one phase at a time instead: spawn the subagent for Phase 1, show me its output, then continue **the same agent** via `SendMessage` for each later phase. A fresh `Agent` call would start cold and re-derive the diff it already read.
 
 ## 4. Report
 
@@ -84,4 +86,4 @@ Then report findings grouped by MUST FIX, SHOULD FIX, CONSIDER — ordered by le
 
 Include the verification story: which of `pytest`, `npm test`, `npm run typecheck && mypy .`, `npm run lint && ruff check .` were actually run, and their results. State plainly anything that was not run.
 
-End with an APPROVAL STATUS: APPROVED, APPROVED WITH MINOR ISSUES, or CHANGES REQUESTED, with a rationale. Approve when the change definitely improves overall code health — do not request changes over preferences. An unmet acceptance criterion is CHANGES REQUESTED regardless of code quality.
+End with an APPROVAL STATUS: APPROVED, APPROVED WITH MINOR ISSUES, CHANGES REQUESTED, or NEEDS DISCUSSION, with a rationale. Approve when the change definitely improves overall code health — do not request changes over preferences. An unmet acceptance criterion is CHANGES REQUESTED regardless of code quality.
