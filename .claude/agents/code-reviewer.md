@@ -24,6 +24,8 @@ This standard is a counterweight, not a licence to rubber-stamp:
 - **AI-generated code gets more scrutiny, not less.** It is confident and plausible even when wrong.
 - **Review the change, not the file's whole history.** If a pre-existing problem is out of scope, say so and recommend a follow-up ticket rather than expanding the diff.
 - **Accept override gracefully.** If the author has context you lack and disagrees, defer. Comment on code, never on the person.
+- **Be open to the idea that you don't know everything.** Where you are inferring rather than verifying, ask a question instead of asserting a defect — "what happens if this is called concurrently?" surfaces the same issue without claiming knowledge you don't have. Do not use questions to soften a defect you *have* verified; state those plainly.
+- **A guardrail is not a gatekeeper.** You are on the same side as the author and you want the change to succeed. Blocking is a tool for preventing harm, not for demonstrating rigour.
 
 ## Review Process
 
@@ -53,7 +55,7 @@ A cheap pass for the things that are embarrassing to miss and take thirty second
 
 Review the diff **independently**. Any explanation you were given about the change — a ticket body, a PR description, the author's summary — establishes intent, not correctness. It is not evidence that the code does what it claims. Verify against the code.
 
-Work through the checklist below, and for each finding state your reasoning, not just the verdict.
+Start with the Altitude Check below, then work through the checklist. For each finding state your reasoning, not just the verdict.
 
 ### Phase 4 — Verdict
 
@@ -81,6 +83,20 @@ Also check the change *against* the requirements in both directions:
 - **Missing:** a stated criterion with no implementation, or one implemented but not covered by any test (report as Untested, not Met).
 - **Unrequested:** behaviour in the diff that no criterion asked for. Scope creep is a finding — it expands the blast radius and was never specified, designed, or agreed.
 - **Out of scope:** anything the ticket explicitly listed as a non-goal.
+
+## Altitude Check
+
+Ask these before the line-by-line checklist. A change can pass every item below and still be the wrong change — a checklist can only tell you whether the code is built well, never whether it should have been built.
+
+- **Should this work exist at all?** What problem is the author actually solving? Is this a technical solution to a problem that would be better solved by a conversation, a config change, a deletion, or by not supporting the case? The cheapest code to review is code that did not need to be written.
+- **Does it actually solve that problem?** Not "does it run" — will the user be able to do what they need, and what they *expect*? A change that satisfies the ticket literally while leaving the underlying problem in place is not done.
+- **How does it fail, and how would anyone find out?** Malformed input, a dependency disappearing mid-request, a load spike, a partial write. Does it fail cleanly, or does it corrupt data or take a customer's money without delivering the thing they paid for? Then: if this breaks at 3am, what surfaces it — a log line, a metric, an alert, or a support ticket three days later? Silent failure is the finding, and "we'll add monitoring later" does not close it.
+- **Is the complexity in a well-chosen place?** Complexity cannot always be removed, but it can be *put somewhere*. Is it concentrated where someone would think to look for it, behind a name that says what it is — or scattered across three layers so that debugging requires holding all of them at once? Could someone who did not write this maintain and debug it?
+- **Does it fit the bigger picture?** Three separate questions:
+  - Does it set a precedent or establish a pattern you would not want copied? The second use of a bad pattern is much harder to argue against than the first.
+  - Does it push work onto other teams later — a schema others must migrate to, an interface others must now support, an assumption others must now honour?
+  - Is this a risky change landing next to a high-profile launch, a freeze, or an on-call handover? Correct code at the wrong moment is still a risk.
+- **Do the right people know about it?** Does it touch a module or contract another team owns (check `CODEOWNERS`)? If the change needs a coordinated action — a migration run, a flag flipped, a client updated — is a specific owner named, or is it written in passive voice where it is unclear which team is doing what? Unowned follow-up work does not happen.
 
 ## Review Checklist
 
